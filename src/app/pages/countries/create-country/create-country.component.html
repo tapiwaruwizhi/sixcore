@@ -1,0 +1,151 @@
+<div class= container>
+    <div class = row>
+        <div class = "col-sm-6">
+            <div class="text-center"> 
+            <h3 class="text-uppercase font-weight-bold mb-4">
+              Countries
+            </h3>
+            </div>
+            <ngx-datatable
+            class="material"
+            [rows]="rowsCountries"
+            [headerHeight]="50"
+            [columnMode]="'force'"
+            [selectionType]="'single'"
+            [loadingIndicator]="loadingIndicatorCountries"
+            rowHeight="50"
+            [limit]="5"
+          >
+          <ngx-datatable-column name="Id" prop="id"></ngx-datatable-column>
+          <ngx-datatable-column name="Short Code" prop="code"></ngx-datatable-column>
+          <ngx-datatable-column name="Country" prop="description"></ngx-datatable-column>
+          <ngx-datatable-column name="Action">
+            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <button class="btn btn-info btn-block" (click)='getCities(row)'> Cities</button> 
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Edit">
+              <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                  <button class="btn btn-success btn-block" (click)='onSelectEdit(row)' (select)="clicked($event)"> Edit</button> 
+              </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+        </div>
+        <div class="col-sm-6">
+            <div>
+                <div class="text-center"> 
+                <h3 class="text-uppercase font-weight-bold mb-4">
+                  Country
+                </h3>
+                </div>
+                <form
+                  class="platform-form"
+                  enctype="multipart/form-data"
+                  accept-charset="UTF-8"
+                  [formGroup]="newCountryForm"
+                  (ngSubmit)="onSubmit()"
+                >
+                  <div
+                    class="form-group email required user_email list-option col-md-12"
+                  >
+                    <label class="control-label email required" for="name"
+                      ><abbr title="required"></abbr> Name</label
+                    >
+                    <input
+                      class="form-control"
+                      aria-required="true"
+                      placeholder="name"
+                      type="name"
+                      name="name"
+                      id="name"
+                      [(ngModel)]="code"                    
+                      formControlName="name"
+                      [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                    />
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">Name is required</div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group email required user_email list-option col-md-12"
+                  >
+                    <label class="control-label email required" for="description"
+                      ><abbr title="required"></abbr> Description</label
+                    >
+                    <input
+                      class="form-control"
+                      aria-required="true"
+                      placeholder="description"
+                      type="description"
+                      name="description"
+                      id="description"
+                      [(ngModel)]="desc"  
+                      formControlName="description"
+                      [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
+                    />
+                    <div
+                      *ngIf="submitted && f.description.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.description.errors.required">
+                        Description is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group text-center col-md-12" id="social-login">
+                    <button
+                      [disabled]="loading"
+                      type="submit"
+                      class="btn btn-primary btn-block"
+                    >
+                      <span
+                        *ngIf="loading"
+                        class="spinner-border spinner-border-sm mr-1"
+                      ></span>
+                      Submit
+                    </button>
+                    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+                      {{ error }}
+                    </div>
+                    <div *ngIf="success" class="alert alert-success mt-3 mb-0">
+                      {{ success }}
+                    </div>
+                  </div>
+                </form>
+                <div class="form-group text-center col-md-12" id="social-login">
+              <button
+              *ngIf="selected"
+              [disabled]="loading"
+              type="submit"
+              (click)="deleteCountry()"
+              class="btn btn-danger btn-block"
+            >
+            
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm mr-1"
+              ></span>
+              Delete
+            </button>
+            </div>
+            <div class="form-group text-center col-md-12" id="social-login">
+              <button
+              *ngIf="selected"
+              [disabled]="loading"
+              type="submit"
+              (click)="newCountry()"
+              class="btn btn-dark btn-block"
+            >
+            
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm mr-1"
+              ></span>
+              New Country
+            </button>
+            </div>
+              </div>
+        </div>
+    </div>
+</div>
+

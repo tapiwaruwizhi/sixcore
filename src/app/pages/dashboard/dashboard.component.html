@@ -1,0 +1,102 @@
+<section  class=container-fluid>
+  <div class=container>
+    <div class= "row ">
+      
+        <div class="col-sm-4 tableholders" >
+          <div class="text-center"> 
+            <h3 class="text-uppercase font-weight-bold mb-4">
+              Countries
+            </h3>
+            </div>
+            <ngx-datatable
+            class="material"
+            [rows]="rowsCountries"
+            [headerHeight]="50"
+            [columnMode]="'force'"
+            [selectionType]="'single'"
+            [loadingIndicator]="loadingIndicatorCountries"
+            rowHeight="50"
+            [selected]="selectedCountries"
+            [limit]="5"
+           
+          >
+          <ngx-datatable-column name="Id" prop="id"></ngx-datatable-column>
+          <ngx-datatable-column name="Short Code" prop="code"></ngx-datatable-column>
+          <ngx-datatable-column name="Country" prop="description"></ngx-datatable-column>
+          <ngx-datatable-column name="Edit">
+            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <button class="btn btn-success btn-block" (click)='onSelectEditCountry(row)'> Edit</button> 
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        </div>    
+        <div class="col-sm-4 tableholders">
+          <div class="text-center"> 
+            <h3 class="text-uppercase font-weight-bold mb-4">
+              Cities
+            </h3>
+            </div>
+            <ngx-datatable
+            class="material"
+            [rows]="rowsCities"
+            
+            [headerHeight]="50"
+            [columnMode]="'force'"
+            [selectionType]="'single'"
+            [loadingIndicator]="loadingIndicatorCities"
+            rowHeight="50"
+            [selected]="selectedCities"
+            [limit]="5"
+           
+          >
+          <ngx-datatable-column name="Id" prop="id"></ngx-datatable-column>
+          <ngx-datatable-column name="Short Code" prop="code"></ngx-datatable-column>
+          <ngx-datatable-column name="City" prop="description"></ngx-datatable-column>
+          <ngx-datatable-column name="Edit">
+            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <button class="btn btn-success btn-block" (click)='onSelectEditCity(row)'> Edit</button> 
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        </div>   
+        <div class="col-sm-4 tableholders">
+          <div class="text-center"> 
+            <h3 class="text-uppercase font-weight-bold mb-4">
+              Projects
+            </h3>
+            </div>
+            <ngx-datatable
+            class="material"
+            [rows]="rowsProjects"
+        
+            [headerHeight]="50"
+            [columnMode]="'force'"
+            [selectionType]="'single'"
+            [loadingIndicator]="loadingIndicatorProjects"
+            rowHeight="50"
+            [selected]="selectedProjects"
+            [limit]="5"
+            
+          >
+          <ngx-datatable-column name="Id" prop="id"></ngx-datatable-column>
+          <ngx-datatable-column name="Short Code" prop="code"></ngx-datatable-column>
+          <ngx-datatable-column name="Status" prop="isActive">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        
+                <span *ngIf="value=== false">Completed</span>
+                <span *ngIf="value=== true">In Progress</span>
+              </ng-template> 
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Edit">
+            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <button class="btn btn-success btn-block" (click)='onSelectEditProject(row)'> Edit</button> 
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        </div>   
+    </div>
+  </div>
+</section>
+
+
+

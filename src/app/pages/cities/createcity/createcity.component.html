@@ -1,0 +1,198 @@
+<div class= container>
+    <div class = row>
+        <div class = "col-sm-6">
+          <div class="text-center"> 
+            <h3 class="text-uppercase font-weight-bold mb-4">
+                Cities
+            </h3>
+            </div>
+            <ngx-datatable
+            class="material"
+            [rows]="rowsCities"
+            [headerHeight]="50"
+            [columnMode]="'force'"
+            [selectionType]="'single'"
+            [loadingIndicator]="loadingIndicatorCities"
+            rowHeight="50"
+            [limit]="5"
+            
+          >
+          <ngx-datatable-column name="Id" prop="id" (select)="clicked($event)"></ngx-datatable-column>
+          <ngx-datatable-column name="Short Code" prop="code" ></ngx-datatable-column>
+          <ngx-datatable-column name="City" prop="description" ></ngx-datatable-column>
+          <ngx-datatable-column name="Action">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+              <button class="btn btn-info btn-block" (click)='getProject(row)'> Projects</button> 
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Edit">
+            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <button class="btn btn-success btn-block" (click)='onSelectEdit(row)' (select)="clicked($event)"> Edit</button> 
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+
+        </div>
+        <div class="col-sm-6">
+            <div>
+                <div class="text-center"> 
+                <h3 class="text-uppercase font-weight-bold mb-4">
+                    City
+                </h3>
+                </div>
+                <form
+                  class="platform-form"
+                  enctype="multipart/form-data"
+                  accept-charset="UTF-8"
+                  [formGroup]="newCityForm"
+                  (ngSubmit)="onSubmit()"
+                >
+                  <div
+                    class="form-group email required user_email list-option col-md-12"
+                  >
+                    <label class="control-label email required" for="name"
+                      ><abbr title="required"></abbr> City Code</label
+                    >
+                    <input
+                      class="form-control"
+                      aria-required="true"
+                      placeholder="City Code"
+                      type="name"
+                      name="name"
+                      id="name"
+                      [(ngModel)]="code"                    
+                      formControlName="name"
+                      [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                    />
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">Code is required</div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group email required user_email list-option col-md-12"
+                  >
+                    <label class="control-label email required" for="description"
+                      ><abbr title="required"></abbr> Description/Name</label
+                    >
+                    <input
+                      class="form-control"
+                      aria-required="true"
+                      placeholder="Name/ Description"
+                      type="description"
+                      name="description"
+                      id="description"
+                      [(ngModel)]="desc"  
+                      formControlName="description"
+                      [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
+                    />
+                    <div
+                      *ngIf="submitted && f.description.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.description.errors.required">
+                        Description is required
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class=" col-md-12">
+                    <label
+                      class="control-label email required"
+                      for="country"
+                      ><abbr title="required"></abbr> Country</label
+                    >
+                    <select
+                      formControlName="country"
+                      class="form-control"
+                      name="country"
+                      [(ngModel)]="countryId"
+                      id="country"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.country.errors
+                      }"
+                    >
+                      <option
+                        value=""
+                        disabled
+                        selected
+                      
+                      >
+                        <span
+                          class="spinner-border spinner-border-sm mr-1"
+                        ></span>
+                        Select a Country</option
+                      >
+                      <option
+                        *ngFor="let option of countrydata; let i = index"
+                        [value]="option.id"  
+                      >
+                        {{ option.code }}  ({{option.description}})</option
+                      >
+                    </select>
+                    <div
+                      *ngIf="submitted && f.country.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.country.errors.required">
+                        Country is required
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="form-group text-center col-md-12" id="social-login">
+                    <button
+                      [disabled]="loading"
+                      type="submit"
+                      class="btn btn-primary btn-block"
+                    >
+                      <span
+                        *ngIf="loading"
+                        class="spinner-border spinner-border-sm mr-1"
+                      ></span>
+                      Submit
+                    </button>
+                    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+                      {{ error }}
+                    </div>
+                    <div *ngIf="success" class="alert alert-success mt-3 mb-0">
+                      {{ success }}
+                    </div>
+                  </div>
+                </form>
+              <div class="form-group text-center col-md-12" >
+                <button
+                *ngIf="selected"
+                [disabled]="loading"
+                type="submit"
+                (click)="deleteCity()"
+                class="btn btn-danger btn-block"
+              >
+              
+                <span
+                  *ngIf="loading"
+                  class="spinner-border spinner-border-sm mr-1"
+                ></span>
+                Delete
+              </button>
+            </div>
+            <div class="form-group text-center col-md-12" >
+                <button
+                *ngIf="selected"
+                [disabled]="loading"
+                type="submit"
+                (click)="newCity()"
+                class="btn btn-dark btn-block"
+              >
+              
+                <span
+                  *ngIf="loading"
+                  class="spinner-border spinner-border-sm mr-1"
+                ></span>
+                New City
+              </button>
+               </div>
+              </div>
+        </div>
+    </div>
+</div>
+

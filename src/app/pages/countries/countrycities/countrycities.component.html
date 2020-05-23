@@ -1,0 +1,133 @@
+<div class= container>
+    <div class = row>
+        <div class="col-sm-4">
+            <div>
+                <div class="text-center"> 
+                <h3 class="text-uppercase font-weight-bold mb-4">
+                  Country
+                </h3>
+                </div>
+                <form
+                  class="platform-form"
+                  enctype="multipart/form-data"
+                  accept-charset="UTF-8"
+                  [formGroup]="countryForm"
+                  
+                >
+                  <div
+                    class="form-group email required user_email list-option col-md-12"
+                  >
+                    <label class="control-label email required" for="name"
+                      ><abbr title="required"></abbr> Country Code</label
+                    >
+                    <input
+                      class="form-control"
+                      aria-required="true"
+                      disabled
+                      placeholder="City Code"
+                      type="name"
+                      name="name"
+                      id="name"
+                      [(ngModel)]="countrycode"                    
+                      formControlName="name"
+                    />
+
+                  </div>
+                  <div
+                    class="form-group email required user_email list-option col-md-12"
+                  >
+                    <label class="control-label email required" for="description"
+                      ><abbr title="required"></abbr> Description/Name</label
+                    >
+                    <input
+                      class="form-control"
+                      aria-required="true"
+                      disabled
+                      placeholder="Name/ Description"
+                      type="description"
+                      name="description"
+                      id="description"
+                      [(ngModel)]="countrydesc"  
+                      formControlName="description"
+                    />
+
+                  </div>
+
+                  <div class=" col-md-12">
+                    <label
+                      class="control-label required"
+                      for="country"
+                      ><abbr title="required"></abbr> Country</label
+                    >
+                    <select
+                      formControlName="country"
+                      class="form-control"
+                      name="country"
+                      (change)="newCountry($event.target.value)"
+                      id="country"
+
+                    >
+                      <option
+                        value=""
+                        disabled
+                        selected
+                      >
+                        <span
+                          class="spinner-border spinner-border-sm mr-1"
+                        ></span>
+                        Select a New Country</option
+                      >
+                      <option
+                        *ngFor="let option of countrydata; let i = index"
+                        [value]="option.id"  
+                       
+                        
+                      >
+                        {{ option.code }}  ({{option.description}})</option
+                      >
+                    </select>
+                  </div>
+                  <br>
+                </form>
+              </div>
+        </div>
+
+        <div class = "col-sm-8">
+          <div class="text-center"> 
+            <h3 class="text-uppercase font-weight-bold mb-4">
+              Cities
+            </h3>
+            </div>
+            <ngx-datatable
+            class="material"
+            [rows]="rowsCities"
+            [headerHeight]="50"
+            [columnMode]="'force'"
+            [selectionType]="'single'"
+            [loadingIndicator]="loadingIndicatorCities"
+            rowHeight="50"
+            [limit]="5"
+            
+          >
+          <ngx-datatable-column name="Id" prop="id"></ngx-datatable-column>
+          <ngx-datatable-column name="Short Code" prop="code" ></ngx-datatable-column>
+          <ngx-datatable-column name="City" prop="description" ></ngx-datatable-column>
+          <ngx-datatable-column name="Action">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+              <button class="btn btn-info btn-block" (click)='getProject(row)'> Projects</button> 
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Edit">
+            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <button class="btn btn-success btn-block" (click)='onSelectEdit(row)'> Edit</button> 
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+
+  
+        </div>
+   
+ 
+
+    </div>
+</div>
